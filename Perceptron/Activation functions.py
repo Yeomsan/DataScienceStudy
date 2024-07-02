@@ -12,7 +12,7 @@ def h(x):       #h is an intial of Heaviside function
     return y.astype(np.int)
 
 #Sigmoid Function is often used in neural network
-def s(x):
+def sigmoid(x):
     y = 1 / (1 + np.exp(-x))
     return y
 
@@ -22,3 +22,4 @@ def r(x):
     return y
 
 #Now you need only calculation with weights and biases.
+
