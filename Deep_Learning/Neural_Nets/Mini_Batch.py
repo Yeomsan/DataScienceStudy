@@ -1,5 +1,5 @@
 import numpy as np
-from dataset.mnist import load_mnist
+from Deep_Learning.Neural_Nets.mnist import load_mnist
 from Two_layer_Net import TwoLayerNet
 
 (x_train, t_train), (x_test, t_test) = \

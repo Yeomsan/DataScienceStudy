@@ -52,4 +52,4 @@ class softmax:
         pass
 
     def forward(self, x):
-        out = 
+        out = None #미구현
