@@ -42,6 +42,28 @@ def numerical_diff(f, x):
 
     return grad
 
+#공부필요
+
+def numerical_gradient(f, x):
+    h = 1e-4 # 0.0001
+    grad = np.zeros_like(x)
+    
+    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
+    while not it.finished:
+        idx = it.multi_index
+        tmp_val = x[idx]
+        x[idx] = float(tmp_val) + h
+        fxh1 = f(x) # f(x+h)
+        
+        x[idx] = tmp_val - h 
+        fxh2 = f(x) # f(x-h)
+        grad[idx] = (fxh1 - fxh2) / (2*h)
+        
+        x[idx] = tmp_val # 값 복원
+        it.iternext()   
+        
+    return grad
+
 #End of math
 
 class TwoLayerNet:
@@ -84,10 +106,10 @@ class TwoLayerNet:
         loss_W = lambda W : self.loss(x, t)
 
         grads = {}
-        grads["W1"] = numerical_diff(loss_W, self.params["W1"])
-        grads["b1"] = numerical_diff(loss_W, self.params["b1"])
-        grads["W2"] = numerical_diff(loss_W, self.params["W2"])
-        grads["b2"] = numerical_diff(loss_W, self.params["b2"])
+        grads["W1"] = numerical_gradient(loss_W, self.params["W1"])
+        grads["b1"] = numerical_gradient(loss_W, self.params["b1"])
+        grads["W2"] = numerical_gradient(loss_W, self.params["W2"])
+        grads["b2"] = numerical_gradient(loss_W, self.params["b2"])
 
         return grads
     
@@ -127,4 +149,3 @@ for i in range(iters_num):
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
         print("train acc, test acc | "+ str(train_acc) + ', '+ str(test_acc))
-
